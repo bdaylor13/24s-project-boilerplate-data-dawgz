@@ -19,6 +19,68 @@ def get_attractions():
     the_response.mimetype = 'application/json'
     return the_response
 
+# create a new attraction
+@attractions.route('/attractions', methods=['POST'])
+def add_new_attraction():
+    
+    # collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    #extracting the variable
+    rentalID = the_data['rentalID']
+    tripID = the_data['tripID']
+    startDate = the_data['startDate']
+    endDate = the_data['endDate']
+    location = the_data['location']
+
+    # Constructing the query
+    query = 'insert into rentals (rentalID, tripID, startDate, endDate, location) values ("'
+    query += rentalID + '", "'
+    query += tripID + '", "'
+    query += startDate + '", "'
+    query += endDate + '",'
+    query += location + ')'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
+
+# update information about a rental
+
+@rentals.route('/rentals', methods=['PUT'])
+def update_rental():
+    # Collecting data from the request object
+    the_data = request.json
+    current_app.logger.info(the_data)
+
+    #extracting the variable
+    rentalID = the_data['rentalID']
+    tripID = the_data['tripID']
+    startDate = the_data['startDate']
+    endDate = the_data['endDate']
+    location = the_data['location']
+
+    # Constructing the query
+    query = 'UPDATE customers SET '
+    query += 'tripID="' + str(tripID) + '", '
+    query += 'startDate="' + startDate + '", '
+    query += 'endDate="' + endDate + '", '
+    query += 'location="' + location + '" '
+    query += 'WHERE rentalID=' + str(rentalID)
+    current_app.logger.info(query)
+
+    # Executing and committing the update statement
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    return 'Success!'
+
 # Get attraction details for specific attraction location
 @attractions.route('/attractions/<location>', methods=['GET'])
 def get_attractionLocation(attractionLocation):
