@@ -70,11 +70,12 @@ def update_attraction():
 
     # Constructing the query
     query = 'UPDATE customers SET '
-    query += 'tripID="' + str(tripID) + '", '
-    query += 'startDate="' + startDate + '", '
-    query += 'endDate="' + endDate + '", '
-    query += 'location="' + location + '" '
-    query += 'WHERE rentalID=' + str(rentalID)
+    query += 'attractionID="' + attractionID + '", '
+    query += 'rideID="' + rideID + '", '
+    query += 'attractionName="' + str(attractionName) + '", '
+    query += 'description="' + srt(description) + '" '
+    query += 'category="' + srt(category) + '" '
+    query += 'location=' + str(location)
     current_app.logger.info(query)
 
     # Executing and committing the update statement
