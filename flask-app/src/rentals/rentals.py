@@ -23,7 +23,7 @@ def get_rentals():
 
 # Get rental details for specific userID
 @rentals.route('/rentals/<rentalID>', methods=['GET'])
-def get_rentals(rentalID):
+def get_rental(rentalID):
     cursor = db.get_db().cursor()
     cursor.execute('select * from rentals where rentalID = {0}'.format(rentalID))
     row_headers = [x[0] for x in cursor.description]
@@ -38,7 +38,7 @@ def get_rentals(rentalID):
 
 # Get rental details for specific Location
 @rentals.route('/rentals/<location>', methods=['GET'])
-def get_rentals(location):
+def get_rental_location(location):
     cursor = db.get_db().cursor()
     cursor.execute('select * from rentals where location = {0}'.format(location))
     row_headers = [x[0] for x in cursor.description]
