@@ -36,9 +36,9 @@ def get_attractionLocation(attractionLocation):
 
 # Get attraction details for specific attraction category
 @attractions.route('/attractions/<category>', methods=['GET'])
-def get_amenity(amenityID):
+def get_attractionCategory(attractionCategory):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from amenities where amenityID = {0}'.format(amenityID))
+    cursor.execute('select * from attractions where attractionCategory = {0}'.format(attractionCategory))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
