@@ -26,20 +26,22 @@ def add_new_attraction():
     # collecting data from the request object 
     the_data = request.json
     current_app.logger.info(the_data)
-
+    
     #extracting the variable
-    rentalID = the_data['rentalID']
-    tripID = the_data['tripID']
-    startDate = the_data['startDate']
-    endDate = the_data['endDate']
+    attractionID = the_data['attractionID']
+    rideID = the_data['rideID']
+    attractionName = the_data['attractionName']
+    description = the_data['description']
+    category = the_data['category']
     location = the_data['location']
 
     # Constructing the query
-    query = 'insert into rentals (rentalID, tripID, startDate, endDate, location) values ("'
-    query += rentalID + '", "'
-    query += tripID + '", "'
-    query += startDate + '", "'
-    query += endDate + '",'
+    query = 'insert into rentals (attractionID, rideID, attractionName, description, category, location) values ("'
+    query += attractionID + '", "'
+    query += rideID + '", "'
+    query += attractionName + '", "'
+    query += description + '",'
+    query += category + '",'
     query += location + ')'
     current_app.logger.info(query)
 
@@ -52,17 +54,18 @@ def add_new_attraction():
 
 # update information about a rental
 
-@rentals.route('/rentals', methods=['PUT'])
-def update_rental():
+@attractions.route('/attractions', methods=['PUT'])
+def update_attraction():
     # Collecting data from the request object
     the_data = request.json
     current_app.logger.info(the_data)
 
     #extracting the variable
-    rentalID = the_data['rentalID']
-    tripID = the_data['tripID']
-    startDate = the_data['startDate']
-    endDate = the_data['endDate']
+    attractionID = the_data['attractionID']
+    rideID = the_data['rideID']
+    attractionName = the_data['attractionName']
+    description = the_data['description']
+    category = the_data['category']
     location = the_data['location']
 
     # Constructing the query
