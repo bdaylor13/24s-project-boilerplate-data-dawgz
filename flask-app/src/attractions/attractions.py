@@ -87,9 +87,9 @@ def update_attraction():
 
 # Get attraction details for specific attraction location
 @attractions.route('/attractions/<location>', methods=['GET'])
-def get_attractionLocation(attractionLocation):
+def get_attractionLocation(location):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from attractions where attractionLocation = {0}'.format(attractionLocation))
+    cursor.execute('select * from attractions where location = {0}'.format(location))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
@@ -119,9 +119,9 @@ def delete_attraction(location):
 
 # Get attraction details for specific attraction category
 @attractions.route('/attractions/<category>', methods=['GET'])
-def get_attractionCategory(attractionCategory):
+def get_attractionCategory(category):
     cursor = db.get_db().cursor()
-    cursor.execute('select * from attractions where attractionCategory = {0}'.format(attractionCategory))
+    cursor.execute('select * from attractions where category = {0}'.format(category))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
