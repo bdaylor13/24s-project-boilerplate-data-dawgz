@@ -54,7 +54,6 @@ insert into customers (customerID, fName, lName, phoneNumber, email, streetAddre
 insert into customers (customerID, fName, lName, phoneNumber, email, streetAddress, city, zipcode) values (438198, 'Hartwell', 'Dobbin', '327-565-2842', 'hdobbin12@wp.com', '45 Warrior Alley', 'Xiuyu', null);
 insert into customers (customerID, fName, lName, phoneNumber, email, streetAddress, city, zipcode) values (679562, 'Madeline', 'Philcox', '516-566-7384', 'mphilcox13@dot.gov', '3114 Becker Pass', 'Yonghe', null);
 
-
 CREATE TABLE IF NOT EXISTS Trips (
     tripID INTEGER PRIMARY KEY,
     customerID INTEGER,
