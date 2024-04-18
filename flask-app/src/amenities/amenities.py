@@ -7,7 +7,7 @@ from src import db
 amenities = Blueprint('amenities', __name__)
 
 # Get all amenities
-@amenitites.route('/amenities', methods=['GET'])
+@amenities.route('/amenities', methods=['GET'])
 def get_amenitites():
     cursor = db.get_db().cursor()
     cursor.execute('select * from amenities')
