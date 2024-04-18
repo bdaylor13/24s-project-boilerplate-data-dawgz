@@ -52,7 +52,7 @@ def add_new_attraction():
     
     return 'Success!'
 
-# update information about a rental
+# update information about an attraction
 
 @attractions.route('/attractions', methods=['PUT'])
 def update_attraction():
@@ -99,6 +99,23 @@ def get_attractionLocation(attractionLocation):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+# delete information about an attraction based on location
+
+@attractions.route('/attractions/,location.', methods=['DELETE'])
+def delete_attraction(location):
+    
+    # collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
+    query = 'DELETE FROM attractions WHERE location = "{0}"'.format(location)
+
+    # executing and committing the delete statement
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    return 'Success!'
 
 # Get attraction details for specific attraction category
 @attractions.route('/attractions/<category>', methods=['GET'])
