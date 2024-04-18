@@ -1,5 +1,8 @@
-CREATE DATABASE IF NOT EXISTS Roamify;
-USE Roamify;
+DROP SCHEMA IF EXISTS `Roamify` ;
+CREATE SCHEMA IF NOT EXISTS `Roamify`;
+
+CREATE DATABASE IF NOT EXISTS 'Roamify';
+USE 'Roamify';
 
 grant all privileges on Roamify.* to 'webapp'@'%';
 flush privileges;
