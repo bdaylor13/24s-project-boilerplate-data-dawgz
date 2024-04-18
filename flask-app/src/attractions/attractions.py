@@ -69,8 +69,8 @@ def update_attraction():
     query += 'attractionID="' + attractionID + '", '
     query += 'rideID="' + rideID + '", '
     query += 'attractionName="' + str(attractionName) + '", '
-    query += 'description="' + srt(description) + '" '
-    query += 'category="' + srt(category) + '" '
+    query += 'description="' + str(description) + '" '
+    query += 'category="' + str(category) + '" '
     query += 'location=' + str(location)
     current_app.logger.info(query)
     # Executing and committing the update statement
