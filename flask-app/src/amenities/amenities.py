@@ -61,18 +61,16 @@ def add_new_rental():
 
     #extracting the variable
     rentalID = the_data['rentalID']
-    tripID = the_data['tripID']
-    startDate = the_data['startDate']
-    endDate = the_data['endDate']
-    location = the_data['location']
+    amenityID = the_data['amenityID']
+    amenityName = the_data['amenityName']
+    description = the_data['description']
 
     # Constructing the query
-    query = 'insert into rentals (rentalID, tripID, startDate, endDate, location) values ("'
+    query = 'insert into amenities (rentalID, amenityID, amenityName, description) values ("'
     query += rentalID + '", "'
-    query += tripID + '", "'
-    query += startDate + '", "'
-    query += endDate + '",'
-    query += location + ')'
+    query += amenityID + '", "'
+    query += amenityName + '", "'
+    query += description + ')'
     current_app.logger.info(query)
 
     # executing and committing the insert statement 
@@ -82,28 +80,25 @@ def add_new_rental():
     
     return 'Success!'
 
-# update information about a rental
-
-@rentals.route('/rentals', methods=['PUT'])
-def update_rental():
+# update information about a amenity
+@amenities.route('/amenities/<amenityID>', methods=['PUT'])
+def update_amenities(amenityID):
     # Collecting data from the request object
     the_data = request.json
     current_app.logger.info(the_data)
 
     #extracting the variable
     rentalID = the_data['rentalID']
-    tripID = the_data['tripID']
-    startDate = the_data['startDate']
-    endDate = the_data['endDate']
-    location = the_data['location']
+    amenityID = the_data['amenityID']
+    amenityName = the_data['amenityName']
+    description = the_data['description']
 
     # Constructing the query
     query = 'UPDATE customers SET '
-    query += 'tripID="' + str(tripID) + '", '
-    query += 'startDate="' + startDate + '", '
-    query += 'endDate="' + endDate + '", '
-    query += 'location="' + location + '" '
-    query += 'WHERE rentalID=' + str(rentalID)
+    query += 'rentalID="' + str(rentalID) + '", '
+    query += 'amenityName="' + amenityName + '", '
+    query += 'description="' + description + '" '
+    query += 'WHERE rentalID=' + str(amenityID)
     current_app.logger.info(query)
 
     # Executing and committing the update statement
@@ -113,15 +108,14 @@ def update_rental():
 
     return 'Success!'
 
-# delete information about a rental
-
-@rentals.route('/rentals/,rentalID.', methods=['DELETE'])
-def delete_rental(rentalID):
+# delete information about a amenity
+@amenities.route('/amenities/<amenityID>', methods=['DELETE'])
+def delete_amenities(amenityID):
     
     # collecting data from the request object 
     the_data = request.json
     current_app.logger.info(the_data)
-    query = 'DELETE FROM rentals WHERE rentalID = "{0}"'.format(rentalID)
+    query = 'DELETE FROM amenities WHERE amenityID = "{0}"'.format(amenityID)
 
     # executing and committing the delete statement
     cursor = db.get_db().cursor()
