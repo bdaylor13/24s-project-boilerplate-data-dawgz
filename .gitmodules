@@ -1,3 +1,3 @@
-[submodule "db/Roamify.sql"]
-	path = db/Roamify.sql
-	url = https://github.com/bdaylor13/24s-project-boilerplate-data-dawgz/db/Roamify.sql
+[submodule "db/mywind"]
+ 	path = db/mywind
+ 	url = https://github.com/dalers/mywind.git
