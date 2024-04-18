@@ -1,6 +1,9 @@
 CREATE DATABASE IF NOT EXISTS Roamify;
 USE Roamify;
 
+grant all privileges on Roamify.* to 'webapp'@'%';
+flush privileges;
+
 CREATE TABLE IF NOT EXISTS customers (
     customerID INTEGER PRIMARY KEY,
     fName VARCHAR(40),
