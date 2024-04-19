@@ -20,30 +20,30 @@ def get_attractions():
     the_response.mimetype = 'application/json'
     return the_response
 
-# create a new attraction
 @attractions.route('/attractions', methods=['POST'])
 def add_new_attraction():
-    
     # collecting data from the request object 
     the_data = request.json
     current_app.logger.info(the_data)
     
-    #extracting the variable
+    #extracting the variables
     attractionID = the_data['attractionID']
     rideID = the_data['rideID']
     attractionName = the_data['attractionName']
     description = the_data['description']
     category = the_data['category']
     location = the_data['location']
+    
     # Constructing the query
-    query = 'insert into rentals (attractionID, rideID, attractionName, description, category, location) values ("'
-    query += attractionID + '", "'
-    query += rideID + '", "'
-    query += attractionName + '", "'
-    query += description + '",'
-    query += category + '",'
-    query += location + ')'
+    query = 'INSERT INTO attractions (attractionID, rideID, attractionName, description, category, location) VALUES ('
+    query += '"' + attractionID + '", '
+    query += '"' + rideID + '", '
+    query += '"' + attractionName + '", '
+    query += '"' + description + '", '
+    query += '"' + category + '", '
+    query += '"' + location + '")'
     current_app.logger.info(query)
+    
     # executing and committing the insert statement 
     cursor = db.get_db().cursor()
     cursor.execute(query)
@@ -96,17 +96,14 @@ def get_attractionLocation(location):
 
 # delete information about an attraction based on location
 
-@attractions.route('/attractions/<location>', methods=['DELETE'])
-def delete_attraction(location):
+@attractions.route('/attractions/<attractionID>', methods=['DELETE'])
+def delete_attraction(attractionID):
+    # Construct the DELETE query
+    query = 'DELETE FROM attractions WHERE attractionID = %s'
     
-    # collecting data from the request object 
-    the_data = request.json
-    current_app.logger.info(the_data)
-    query = 'DELETE FROM attractions WHERE location = "{0}"'.format(location)
-
-    # executing and committing the delete statement
+    # Executing and committing the delete statement
     cursor = db.get_db().cursor()
-    cursor.execute(query)
+    cursor.execute(query, (str(attractionID),))
     db.get_db().commit()
 
     return 'Success!'
