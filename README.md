@@ -1,19 +1,17 @@
-# MySQL + Flask Boilerplate Project
+DataDawgz: Claire Stewart, Brady Daylor, Sam Caron, Lucas Tolman
 
-This repo contains a boilerplate setup for spinning up 3 Docker containers: 
-1. A MySQL 8 container for obvious reasons
-1. A Python Flask container to implement a REST API
-1. A Local AppSmith Server
+Roamify: 
+Our product is a travel booking site that takes hotel price, transportation efficiency, and travel preferences into account in order to determine the best travel option for a customer. We will utilize an API that has data on hotels, flights, taxis, prices, and filtering. The website will include a filtering system that allows you to filter by location preference, as well as general price ranges for the entire trip or specific segments. The website will be easily accessible to all types of customers, ranging from single travelers to families, or business partners. 
 
-## How to setup and start the containers
-**Important** - you need Docker Desktop installed
+To build/start the containers:
+- clone the project to your machine
+- create a db_password.txt and db_root_password.txt file in the secrets folder
+- write passwords inside both of the txt files
+- in the terminal, navigate to the folder of the project
+- use the command 'docker compose up -d' to build the containers
 
-1. Clone this repository.  
-1. Create a file named `db_root_password.txt` in the `secrets/` folder and put inside of it the root password for MySQL. 
-1. Create a file named `db_password.txt` in the `secrets/` folder and put inside of it the password you want to use for the a non-root user named webapp. 
-1. In a terminal or command prompt, navigate to the folder with the `docker-compose.yml` file.  
-1. Build the images with `docker compose build`
-1. Start the containers with `docker compose up`.  To run in detached mode, run `docker compose up -d`. 
+
+
 
 
 
