@@ -21,40 +21,40 @@ def get_rentals():
     the_response.mimetype = 'application/json'
     return the_response
 
-# Get rental details for specific userID
+# Get rental details for specific rentalID
 @rentals.route('/rentals/<rentalID>', methods=['GET'])
 def get_rental(rentalID):
+    query = 'select * from rentals where rentalID = ' + str(rentalID)
+    current_app.logger.info(query)
+
     cursor = db.get_db().cursor()
-    cursor.execute('select * from rentals where rentalID = {0}'.format(rentalID))
-    row_headers = [x[0] for x in cursor.description]
+    cursor.execute(query)
+    column_headers = [x[0] for x in cursor.description]
     json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+    the_data = cursor.fetchall()
+    for row in the_data:
+        json_data.append(dict(zip(column_headers, row)))
+    return jsonify(json_data)
 
 # Get rental details for specific Location
 @rentals.route('/rentals/<location>', methods=['GET'])
 def get_rental_location(location):
+    query = 'select * from rentals where location = ' + str(location)
+    current_app.logger.info(query)
+
     cursor = db.get_db().cursor()
-    cursor.execute('select * from rentals where location = {0}'.format(location))
-    row_headers = [x[0] for x in cursor.description]
+    cursor.execute(query)
+    column_headers = [x[0] for x in cursor.description]
     json_data = []
-    theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response
+    the_data = cursor.fetchall()
+    for row in the_data:
+        json_data.append(dict(zip(column_headers, row)))
+    return jsonify(json_data)
 
 # post a new rental
 @rentals.route('/rentals', methods=['POST'])
 def add_new_rental():
-    
+    from datetime import datetime
     # collecting data from the request object 
     the_data = request.json
     current_app.logger.info(the_data)
@@ -66,13 +66,23 @@ def add_new_rental():
     endDate = the_data['endDate']
     location = the_data['location']
 
+    # Parse the date string into a datetime object
+    start_date_obj = datetime.strptime(startDate, '%a, %d %b %Y %H:%M:%S %Z')
+    # Format the datetime object as 'YYYY-MM-DD HH:MM:SS'
+    formatted_start_date = start_date_obj.strftime('%Y-%m-%d %H:%M:%S')
+
+    # Parse the date string into a datetime object
+    end_date_obj = datetime.strptime(endDate, '%a, %d %b %Y %H:%M:%S %Z')
+    # Format the datetime object as 'YYYY-MM-DD HH:MM:SS'
+    formatted_end_date = end_date_obj.strftime('%Y-%m-%d %H:%M:%S')
+
     # Constructing the query
-    query = 'insert into rentals (rentalID, tripID, startDate, endDate, location) values ("'
-    query += rentalID + '", "'
-    query += tripID + '", "'
-    query += startDate + '", "'
-    query += endDate + '",'
-    query += location + ')'
+    query = 'insert rentals SET '
+    query += 'tripID="' + str(tripID) + '", '
+    query += 'startDate="' + formatted_start_date + '", '
+    query += 'endDate="' + formatted_end_date + '", '
+    query += 'location="' + location + '" '
+    query += 'WHERE rentalID=' + str(rentalID)
     current_app.logger.info(query)
 
     # executing and committing the insert statement 
@@ -86,6 +96,8 @@ def add_new_rental():
 
 @rentals.route('/rentals', methods=['PUT'])
 def update_rental():
+    from datetime import datetime
+
     # Collecting data from the request object
     the_data = request.json
     current_app.logger.info(the_data)
@@ -97,11 +109,21 @@ def update_rental():
     endDate = the_data['endDate']
     location = the_data['location']
 
+    # Parse the date string into a datetime object
+    start_date_obj = datetime.strptime(startDate, '%a, %d %b %Y %H:%M:%S %Z')
+    # Format the datetime object as 'YYYY-MM-DD HH:MM:SS'
+    formatted_start_date = start_date_obj.strftime('%Y-%m-%d %H:%M:%S')
+
+    # Parse the date string into a datetime object
+    end_date_obj = datetime.strptime(endDate, '%a, %d %b %Y %H:%M:%S %Z')
+    # Format the datetime object as 'YYYY-MM-DD HH:MM:SS'
+    formatted_end_date = end_date_obj.strftime('%Y-%m-%d %H:%M:%S')
+
     # Constructing the query
-    query = 'UPDATE customers SET '
+    query = 'UPDATE rentals SET '
     query += 'tripID="' + str(tripID) + '", '
-    query += 'startDate="' + startDate + '", '
-    query += 'endDate="' + endDate + '", '
+    query += 'startDate="' + formatted_start_date + '", '
+    query += 'endDate="' + formatted_end_date + '", '
     query += 'location="' + location + '" '
     query += 'WHERE rentalID=' + str(rentalID)
     current_app.logger.info(query)
@@ -115,7 +137,7 @@ def update_rental():
 
 # delete information about a rental
 
-@rentals.route('/rentals/,rentalID.', methods=['DELETE'])
+@rentals.route('/rentals/<rentalID>', methods=['DELETE'])
 def delete_rental(rentalID):
     
     # collecting data from the request object 
